@@ -516,17 +516,17 @@ def main():
                         ax.plot(extended_dates[-2:], extended_prices[-2:], linestyle='-', color='red', label="Predicted price")
                         
                         # Định dạng biểu đồ
-                        ax.set_title(f"Price {selected_stock} - 10 days prediction")
+                        ax.set_title(f"Price {selected_stock}")
                         ax.set_xlabel("Date")
                         ax.set_ylabel("Price (VND)")
                         ax.legend()
                         
                         # Đặt ticks và nhãn trục x
                         
-                        ax.set_xticks(extended_dates)
-                        ax.set_xticklabels(extended_dates, rotation=90, fontsize=8)
+                        # ax.set_xticks(extended_dates)
+                        # ax.set_xticklabels(extended_dates, rotation=90, fontsize=8)
                         
-                        ax.grid(True)
+                        # ax.grid(True)
                         fig.tight_layout()
                         
                         # Hiển thị biểu đồ trong Streamlit
