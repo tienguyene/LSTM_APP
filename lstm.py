@@ -525,7 +525,7 @@ def main():
                         
                         # ax.set_xticks(extended_dates)
                         # ax.set_xticklabels(extended_dates, rotation=90, fontsize=8)
-                        
+                        ax.get_xaxis().set_visible(False)
                         # ax.grid(True)
                         fig.tight_layout()
                         
