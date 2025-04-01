@@ -48,7 +48,7 @@ st.markdown(
     }} /* màu nền sidebar */
 
     [data-testid="stSidebar"] h1 {{
-        font-size: 30px !important;
+        font-size: 28px !important;
         background-color: #232D3F !important;
         color: #FFFFFF !important;
         text-align: center !important;
