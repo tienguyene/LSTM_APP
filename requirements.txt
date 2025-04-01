@@ -55,7 +55,7 @@ kiwisolver==1.4.8
 kt-legacy==1.0.5
 lazy_loader==0.4
 libclang==18.1.1
-libgl1
+
 llvmlite==0.43.0
 Markdown==3.7
 markdown-it-py==3.0.0
