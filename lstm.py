@@ -385,9 +385,9 @@ def main():
     load_data() # Gọi hàm để load các dữ liệu và lưu trong session (không cần load lại khi chuyển trang)
 
 
-    st.sidebar.markdown("# Navigation")
+    st.sidebar.markdown("# PAGES")
 
-    page = st.sidebar.radio("Pages", ["Home 🏠", "Stock Prediction 🔮", "Portfolio Optimization 🔢"])
+    page = st.sidebar.radio("", ["Home 🏠", "Stock Prediction 🔮", "Portfolio Optimization 🔢"])
 
     if page == "Home 🏠":
         st.markdown(
