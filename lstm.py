@@ -16,7 +16,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 import joblib
-import utils as ut
+import function as ut
 import base64
 from streamlit_echarts import st_echarts
 st.set_page_config(layout="wide")
