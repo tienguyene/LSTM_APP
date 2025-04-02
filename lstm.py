@@ -217,7 +217,7 @@ def load_data():
         st.session_state.Vn100_list = st.session_state.stock.listing.symbols_by_group('VN100')
         print("Vn100_list loaded")
     if "stock_dict" not in st.session_state:
-        st.session_state.stock_dict, date_list = ut.read_data('stock_data.csv', st.session_state.Vn100_list)
+        st.session_state.stock_dict, date_list = ut.read_data('stock_data_latest.csv', st.session_state.Vn100_list)
         st.session_state.formated_date_list = [i.date() for i in date_list]
         print("Stock dict loaded")
     if "models" not in st.session_state:
