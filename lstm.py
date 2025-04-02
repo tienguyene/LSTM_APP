@@ -16,7 +16,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 import joblib
-import function as ut
+import utils as ut
 import base64
 from streamlit_echarts import st_echarts
 st.set_page_config(layout="wide")
@@ -194,6 +194,16 @@ st.markdown(
         text-align: right !important;
     }}
 
+    [data-baseweb="progress-bar"] > div > div > div {{
+        background-color: #FFD700 !important;  /* Chỉnh màu của thanh tiến trình */
+    }}
+
+    .stAlert p {{
+        font-size: 25px !important;
+        color: #FFFFFF !important;
+        text-align: right !important;
+    }}
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -207,7 +217,7 @@ def load_data():
         st.session_state.Vn100_list = st.session_state.stock.listing.symbols_by_group('VN100')
         print("Vn100_list loaded")
     if "stock_dict" not in st.session_state:
-        st.session_state.stock_dict, date_list = ut.read_data('stock_data_latest.csv', st.session_state.Vn100_list)
+        st.session_state.stock_dict, date_list = ut.read_data('stock_data.csv', st.session_state.Vn100_list)
         st.session_state.formated_date_list = [i.date() for i in date_list]
         print("Stock dict loaded")
     if "models" not in st.session_state:
@@ -230,6 +240,10 @@ def load_data():
     if "result_2" not in st.session_state:
         st.session_state.result_2 = None
         print("result_2 loaded")
+
+    if "company_info" not in st.session_state:
+        st.session_state.company_info = pd.read_csv("company_info.csv")
+        print("company_info loaded")
 
 def take_x_dates(stock_dict, stock_id, index, num_dates):
     return stock_dict[stock_id].iloc[-num_dates-index-1:-index-1:1]
@@ -262,14 +276,14 @@ def predict_all_stocks(stock_dict, index, num_dates, stock_list, model):
 def predict_with_all_models(stock_dict, index, num_dates, stock_list, models):
     n = len(models)
     predictions = np.empty((0, 100))
-    progress_bar  = st.progress(0)
+    progress_bar  = st.empty()
     for i in range(n):
         if i <= 9:
             predictions = np.concatenate((predictions, predict_all_stocks(stock_dict, index, num_dates[i], stock_list, models[i])), axis = 0)
         else:
             predictions = np.concatenate((predictions, predict_all_stocks(stock_dict, index, 30, stock_list, models[i])), axis = 0)
         progress_bar.progress((i+1)/n)
-    st.success("Complete!")
+    st.warning("Complete!")
     return predictions
 
 def compare_with_real_data(stock_dict, index, stock_list, predictions, show_comparison = 1, index_show = 1):
@@ -380,6 +394,42 @@ def get_pie_options(title, data):
         }]
     }
 
+def display_company_data(df, stock):
+    stock_data = df[df['stock'] == stock]
+    stock_data = stock_data.map(lambda x: x.lstrip() if isinstance(x, str) else x)
+
+
+    if not stock_data.empty:
+        stock_data_transposed = stock_data.T.reset_index()
+        stock_data_transposed.columns = ["Attribute", "Value"]  # Đặt tên cột
+
+        # Hiển thị DataFrame với cột Website có thể click
+        st.data_editor(
+            stock_data_transposed,
+            hide_index=True,
+            column_config={
+                "Attribute": st.column_config.TextColumn(label="Attribute"),
+                "Value": st.column_config.TextColumn(label="Value")  # Giữ link nếu là URL
+            }
+        )
+        # st.data_editor(
+        #     stock_data,
+        #     hide_index=True,
+        #     column_config={
+        #         "company_name": st.column_config.TextColumn(label="company_name"),
+        #         "company_profile": st.column_config.TextColumn(label="company_profile"),
+        #         "history_dev": st.column_config.TextColumn(label="history_dev"),
+        #         "key_developments": st.column_config.TextColumn(label="key_developments"),
+        #         "business_strategies": st.column_config.TextColumn(label="business_strategies"),
+        #         "website": st.column_config.LinkColumn(label="website"),
+        #     }
+        # )
+    else:
+        st.error("No data found for the selected stock.")
+
+
+    
+
 
 def main():
     load_data() # Gọi hàm để load các dữ liệu và lưu trong session (không cần load lại khi chuyển trang)
@@ -488,6 +538,15 @@ def main():
                     """,
                     unsafe_allow_html=True
                 )
+                # Nếu có mã cổ phiếu được chọn, hiển thị thông tin công ty
+                if selected_stock:
+                    st.markdown(
+                        """
+                        <h3> Company Information </h3>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    display_company_data(st.session_state.company_info, selected_stock)
                 
                 stock_df = stock_dict[selected_stock]
                 if stock_df.empty or 'close' not in stock_df.columns:
