@@ -660,7 +660,7 @@ def main():
                 # mc_data = [{"name": top_stock_3, "value": mc_weight} for top_stock_3, mc_weight in zip(top_stocks_3, mc_weights)]
                 mv_data = [{"name": top_stock_3, "value": mv_weight} for top_stock_3, mv_weight in zip(top_stocks_3, mv_weights)]
 
-                col1, col2 = st.columns(2)
+                col1, col2 = st.columns([1, 1])
 
                 with col1:
                     st.data_editor(st.session_state.result_2[i])
