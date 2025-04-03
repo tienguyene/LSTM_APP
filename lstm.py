@@ -409,7 +409,7 @@ def display_company_data(df, stock):
             hide_index=True,
             column_config={
                 "Attribute": st.column_config.TextColumn(label="Attribute"),
-                "Value": st.column_config.TextColumn(label="Value")  # Giữ link nếu là URL
+                "Value": st.column_config.TextColumn(label="Content")
             }
         )
         # st.data_editor(
