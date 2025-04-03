@@ -188,6 +188,12 @@ st.markdown(
         text-align: right !important;
     }}
 
+    #company-information {{
+        font-size: 30px !important
+        color: #FFFFFF !important;
+        text-align: right !important;
+    }}
+
     .chart_desc {{
         font-size: 30px !important;
         color: #FFFFFF !important;
