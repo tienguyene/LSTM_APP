@@ -532,12 +532,6 @@ def main():
 
             # Hiển thị biểu đồ nếu có mã cổ phiếu được chọn
             if selected_stock and st.session_state.predictions is not None:
-                st.markdown(
-                    """
-                    <h3> Stock trend plot </h3>
-                    """,
-                    unsafe_allow_html=True
-                )
                 # Nếu có mã cổ phiếu được chọn, hiển thị thông tin công ty
                 if selected_stock:
                     st.markdown(
@@ -554,6 +548,12 @@ def main():
                     return
                 else:
                     try:
+                        st.markdown(
+                            """
+                            <h3> Stock trend plot </h3>
+                            """,
+                            unsafe_allow_html=True
+                        )
                         # Lấy dữ liệu 10 ngày trước
                         stock_data = stock_df.iloc[-(st.session_state.index+11):-(st.session_state.index+1)]['close'].values
                         dates = formated_date_list[-(st.session_state.index+11):-(st.session_state.index+1)]
