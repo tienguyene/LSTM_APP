@@ -413,6 +413,7 @@ def display_company_data(df, stock):
         st.data_editor(
             stock_data_transposed,
             use_container_width=True,
+            height = 800px,
             hide_index=True,
             column_config={
                 "Attribute": st.column_config.TextColumn(label="Attribute"),
