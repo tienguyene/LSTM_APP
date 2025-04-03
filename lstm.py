@@ -412,6 +412,7 @@ def display_company_data(df, stock):
         # Hiển thị DataFrame với cột Website có thể click
         st.data_editor(
             stock_data_transposed,
+            use_container_width=True,
             hide_index=True,
             column_config={
                 "Attribute": st.column_config.TextColumn(label="Attribute"),
